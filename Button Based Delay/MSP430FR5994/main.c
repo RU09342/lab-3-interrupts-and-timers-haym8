@@ -2,13 +2,13 @@
 
 int main(void) {
 	WDTCTL = WDTPW + WDTHOLD;                 // Stop WDT
-	volatile unsigned int i = 0;
+	volatile unsigned int i = 0;		  // Make counter
 
 	// Disable the GPIO power-on default high-impedance mode
 	PM5CTL0 &= ~LOCKLPM5;
 
 	P1DIR |= BIT0;                            // P1.0 output
-	P1OUT &= BIT0;	// Initialize LED to 0
+	P1OUT &= BIT0;				  // Initialize LED to 0
 
 	// Set up buttons
 	P5DIR &= ~BIT6;
@@ -19,18 +19,21 @@ int main(void) {
 	P5OUT |= BIT5;
 	P5REN |= BIT5;
 
-	TA1CCTL0 = CCIE;                          // CCR0 interrupt enabled
-	TA1CCR0 = 3276;							// 10 Hz clock to sTArt
-	TA1CTL = TASSEL_1 + MC_1 + TACLR;         // ACLK, upmode, clear TAR
+	TA1CCTL0 = CCIE;                        // CCR0 interrupt enabled
+	TA1CCR0 = 3276;		       		// 10 Hz clock to sTArt
+	TA1CTL = TASSEL_1 + MC_1 + TACLR;       // ACLK, upmode, clear TAR
 
 	__bis_SR_register(GIE);       // Enter LPM3, enable interrupts
 	while (1) {
+		// If button is pressed
 		if ((P5IN & BIT6) != BIT6) {
 			i = 0;
+			// Count from 0 while button is pressed down
 			while ((P5IN & BIT6) != BIT6) {
 				P1OUT |= BIT0;
 				i++;
 			}
+			// Assign count to CCR0
 			TA1CCR0 = i;
 		}
 	}

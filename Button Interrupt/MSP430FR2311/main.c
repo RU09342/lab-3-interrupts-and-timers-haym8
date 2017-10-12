@@ -1,14 +1,20 @@
+/*
+ * Mitchell Hay
+ * RU09342
+ * Lab 3 Button Interrupt
+ * MSP430
+ */
+
 #include <msp430.h>
 
 int main(void) {
-	WDTCTL = WDTPW + WDTHOLD;                 // Stop watchdog timer
-	// Disable the GPIO power-on default high-impedance mode
-	PM5CTL0 &= ~LOCKLPM5;
-	P1DIR |= BIT0;                            // Set P1.0 to output direction
-	P1IE |= BIT1;                            // P2.1 interrupt enabled
-	P1IES |= BIT1;                            // P2.1 Hi/lo edge
-	P1REN |= BIT1;                            // Enable Pull Up on SW2 (P2.1)
-	P1IFG &= ~BIT1;                           // P2.1 IFG cleared
+	WDTCTL = WDTPW + WDTHOLD;               // Stop watchdog timer
+	PM5CTL0 &= ~LOCKLPM5;			// Disable the GPIO power-on default high-impedance mode
+	P1DIR |= BIT0;                          // Set P1.0 to output direction
+	P1IE |= BIT1;                           // P1.1 interrupt enabled
+	P1IES |= BIT1;                          // P1.1 Hi/lo edge
+	P1REN |= BIT1;                          // Enable Pull Up on SW2 (P2.1)
+	P1IFG &= ~BIT1;                         // P1.1 IFG cleared
 											  // BIT1 on Port 2 can be used as Switch2
 
 	__bis_SR_register(LPM4_bits + GIE);       // Enter LPM4 w/interrupt

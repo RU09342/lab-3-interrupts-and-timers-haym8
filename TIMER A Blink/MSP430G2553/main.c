@@ -1,6 +1,10 @@
 /*
- *
+ * Mitchell Hay
+ * RU09342
+ * Lab 3 Timer A Interrupt
+ * MSP430G2553
  */
+
 #include <msp430.h>
 
 int main(void) {
@@ -8,7 +12,7 @@ int main(void) {
 	P1DIR |= 0x01;                            // P1.0 output
 	CCTL0 = CCIE;                             // CCR0 interrupt enabled
 	TACTL = TASSEL_2 + MC_1 + ID_3;           // SMCLK/8, upmode
-	CCR0 = 60000;
+	CCR0 = 60000;				  // 1.25 Hz
 
 	__bis_SR_register(LPM0_bits + GIE);       // Enter LPM0 w/ interrupt
 }

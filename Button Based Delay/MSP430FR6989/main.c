@@ -1,16 +1,23 @@
+/*
+ * Mitchell Hay
+ * RU09342
+ * Lab 3 Button Based Delay
+ * MSP430FR6989
+ */
+
 #include <msp430.h>
 
 int main(void) {
 	WDTCTL = WDTPW + WDTHOLD;                 // Stop WDT
-	volatile unsigned int i = 0;
+	volatile unsigned int i = 0;		  // Make counter
 
 	// Disable the GPIO power-on default high-impedance mode
 	PM5CTL0 &= ~LOCKLPM5;
 
 	P1DIR |= BIT0;                            // P1.0 output
-	P1OUT &= BIT0;	// Initialize LED to 0
+	P1OUT &= BIT0;				  // Initialize LED to 0
 
-	// Set up button
+	// Set up buttons
 	P1DIR &= ~BIT1;
 	P1OUT |= BIT1;
 	P1REN |= BIT1;
@@ -20,21 +27,23 @@ int main(void) {
 	P1REN |= BIT2;
 
 	TA1CCTL0 = CCIE;                          // CCR0 interrupt enabled
-	TA1CCR0 = 3276;							// 10 Hz clock to start
+	TA1CCR0 = 3276;				  // 10 Hz clock to start
 	TA1CTL = TASSEL_1 + MC_1 + TACLR;         // ACLK, upmode, clear TAR
 
-	__bis_SR_register(GIE);       // Enter LPM3, enable interrupts
+	__bis_SR_register(GIE);      		  // Enter LPM3, enable interrupts
 	while (1) {
+		// If button is pressed
 		if ((P1IN & BIT1) != BIT1) {
 			i = 0;
+			// Count from 0 while button is pressed
 			while ((P1IN & BIT1) != BIT1) {
 				P1OUT |= BIT0;
 				i++;
 			}
+			// Assign count to CCR0
 			TA1CCR0 = i;
 		}
 	}
-	//__no_operation();                         // For debugger
 }
 
 // Timer1 A0 interrupt service routine

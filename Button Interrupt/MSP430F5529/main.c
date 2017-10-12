@@ -2,7 +2,7 @@
  * Mitchell Hay
  * RU09342
  * Lab 3 Button Interrupt
- * MSP430G2553
+ * MSP430F5529
 */
 
 #include <msp430.h>
@@ -15,9 +15,8 @@ int main(void)
   P2IES |= BIT1;                            // P2.1 Hi/lo edge
   P2REN |= BIT1;                            // Enable Pull Up on SW2 (P2.1)
   P2IFG &= ~BIT1;                           // P2.1 IFG cleared
-                                            // BIT1 on Port 2 can be used as Switch2
 
-  __enable_interrupt();
+  __enable_interrupt();                     // Interrupt enabled
   __bis_SR_register(LPM4_bits + GIE);       // Enter LPM4 w/interrupt
 }
 

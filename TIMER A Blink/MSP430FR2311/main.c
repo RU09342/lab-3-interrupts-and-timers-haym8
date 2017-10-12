@@ -1,3 +1,10 @@
+/*
+ * Mitchell Hay
+ * RU09342
+ * Lab Timer A Blink
+ * MSP430FR2311
+ */
+
 #include <msp430.h>
 
 int main(void) {

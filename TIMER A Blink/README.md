@@ -1,6 +1,6 @@
 ## Mitchell Hay
 
-# Off-Board Blink
+# Timer A Interrupt
 Similar to the button, internal timers can also trigger interrupts. Timer interrupts happen when the timer counts up to a certain value. This can be very handy, and in this part of the lab it would be used to blink an LED with a 50% duty cycle.
 
 # Devices

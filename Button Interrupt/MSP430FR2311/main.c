@@ -2,7 +2,7 @@
  * Mitchell Hay
  * RU09342
  * Lab 3 Button Interrupt
- * MSP430
+ * MSP430FR2311
  */
 
 #include <msp430.h>

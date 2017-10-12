@@ -1,5 +1,6 @@
 /*
  * Mitchell Hay
+ * RU09342
  * Lab 3 Button Based Delay
  * MSP430F5529
 */
@@ -9,12 +10,12 @@
 int main(void)
 {
   WDTCTL = WDTPW + WDTHOLD;                 // Stop WDT
-  volatile unsigned int i = 0;
+  volatile unsigned int i = 0;		    // Make counter
 
   P1DIR |= BIT0;                            // P1.0 output
-  P1OUT &= BIT0;	// Initialize LED to 0
+  P1OUT &= BIT0;			    // Initialize LED to 0
 
-  // Set up button
+  // Set up buttons
   P2DIR &= ~BIT1;
   P2OUT |= BIT1;
   P2REN |= BIT1;
@@ -24,17 +25,21 @@ int main(void)
   P1REN |= BIT1;
 
   TA1CCTL0 = CCIE;                          // CCR0 interrupt enabled
-  TA1CCR0 = 3276;							// 10 Hz clock to start
+  TA1CCR0 = 3276;			    // 10 Hz clock to start
   TA1CTL = TASSEL_1 + MC_1 + TACLR;         // ACLK, upmode, clear TAR
 
   __bis_SR_register(GIE);       // Enter LPM3, enable interrupts
+	// Loop forever
 	while (1) {
+		// If button is pressed
 		if ((P2IN & BIT1) != BIT1) {
 			i = 0;
+			// Count while button is being held down
 			while ((P2IN & BIT1) != BIT1) {
 				P1OUT |= BIT0;
 				i++;
 			}
+			// Assign value of counter to CCR0
 			TA1CCR0 = i;
 		}
 	}

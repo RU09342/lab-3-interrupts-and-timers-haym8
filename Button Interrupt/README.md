@@ -24,6 +24,5 @@ The LED turns on and off based on the user's input, which in this case is a butt
 There are no known errors at this time. 
 
 # Tasks
-* [x] Review circuit design knowledge
-* [x] Choose appropriate values for circuit elements
-* [ ] Implement an offboard UART connection
+* [x] Learn benefits of interrupts over polling
+* [x] Blink LED with a button

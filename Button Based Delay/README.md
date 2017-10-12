@@ -20,12 +20,12 @@ Each of the device projects in this part of the lab can be imported into Code Co
 ## Usage
 The user clicks the button and holds it down to determine the new rate of the button blink. The longer the button is held, the longer the period of one cycle is.
 ## Extra Work
-Using the MSP430F5529, a "reset" button was added to the program. When this button was clicked, the LED blinking would return back to 10 Hz.
+Using the MSP430F5529, a "reset" button was added to the program. When this button was clicked, the LED blinking would return back to 10 Hz. While the button to control the button blink rate was done using polling, the reset button was done using an interrupt. That means there were two instances of interrupts and one instance of polling for the extra work section of this part of the lab.
 
 # Known Errors
-Be sure to connect the reset pin of the G2553 chip properly, or else there will be no output. If the breakout board is not being used, then the reset pin can be connected to a resistor in series with Vcc.
+There are no known errors at this time
 
 # Tasks
-* [x] Review circuit design knowledge
-* [x] Choose appropriate values for circuit elements
-* [ ] Implement an offboard UART connection
+* [x] Handle two different types of I/O at once
+* [x] Make a program with interrupts while the user adds input
+* [x] Combine polling and interrupts

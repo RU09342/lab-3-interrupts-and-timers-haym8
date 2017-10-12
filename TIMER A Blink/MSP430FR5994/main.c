@@ -1,3 +1,10 @@
+/*
+ * Mitchell Hay
+ * RU09342
+ * Lab 3 Timer A Interrupt
+ * MSP430FR5994
+ */
+
 #include <msp430.h>
 
 int main(void)

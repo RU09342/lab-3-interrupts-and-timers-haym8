@@ -3,14 +3,16 @@
 int main(void)
 {
   WDTCTL = WDTPW + WDTHOLD;                 // Stop watchdog timer
-	// Disable the GPIO power-on default high-impedance mode
-	PM5CTL0 &= ~LOCKLPM5;
+	
+  // Disable the GPIO power-on default high-impedance mode
+  PM5CTL0 &= ~LOCKLPM5;
+	
   P1DIR |= BIT0;                            // Set P1.0 to output direction
 
-  P5IE |=  BIT6;                            // P2.1 interrupt enabled
-  P5IES |= BIT6;                            // P2.1 Hi/lo edge
-  P5REN |= BIT6;                            // Enable Pull Up on SW2 (P2.1)
-  P5IFG &= ~BIT6;                           // P2.1 IFG cleared
+  P5IE |=  BIT6;                            // P56 interrupt enabled
+  P5IES |= BIT6;                            // P5.6 Hi/lo edge
+  P5REN |= BIT6;                            // Enable Pull Up on SW1 (P5.6)
+  P5IFG &= ~BIT6;                           // P5.6 IFG cleared
 
   __bis_SR_register(LPM4_bits + GIE);       // Enter LPM4 w/interrupt
 }
@@ -26,5 +28,5 @@ void __attribute__ ((interrupt(PORT1_VECTOR))) Port_1 (void)
 #endif
 {
   P1OUT ^= BIT0;                            // P1.0 = toggle
-  P5IFG &= ~BIT6;                           // P2.1 IFG cleared
+  P5IFG &= ~BIT6;                           // P5.6 IFG cleared
 }
